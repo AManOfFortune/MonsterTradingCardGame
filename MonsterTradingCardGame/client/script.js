@@ -23,14 +23,17 @@ async function queryData(method, location, params) {
     })
 }
 
-document.querySelector("#register").addEventListener("click", () => {
-    queryData("POST", "/users", JSON.stringify({username: "altenhof", password: "philipp"}))
-})
+// document.querySelector("#register").addEventListener("click", () => {
+//     queryData("POST", "/users", JSON.stringify({username: "test", password: "test"}))
+// })
 
-document.querySelector("#login").addEventListener("click", () => {
-    queryData("GET", "/users/altenhof")
-})
+document.querySelector("#loginModal form").addEventListener("submit", async (e) => {
+    e.preventDefault()
 
-document.querySelector("#invalid").addEventListener("click", () => {
-    queryData("POST", "/options")
+    const username = document.querySelector("#username").value
+    const password = document.querySelector("#password").value
+
+    console.log("Username: " + username + " Password: " + password)
+
+    await queryData("POST", "/sessions", JSON.stringify({username: username, password: password}))
 })

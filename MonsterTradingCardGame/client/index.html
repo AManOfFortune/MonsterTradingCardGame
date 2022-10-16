@@ -5,12 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="register">Register</button>
-    <button id="login">Login</button>
-    <button id="invalid">Invalid</button>
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close close_login">&times;</span>
+            <form>
+                <h1>Login</h1>
+            
+                <div class="row-centred">
+                    <div class="form-group col-sm-12">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                        </select>
+                    </div>
+                </div>
+            
+                <div class="row-centred">
+                    <div class="form-group col-sm-12">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                </div>
+            
+                <div class="row">
+                    <input type="submit" class="submit-btn col-sm-4" value="login">
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- <button id="register">Register</button> -->
+    <button id="login" class="submit-btn">Login</button>
     
     <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="ui.js"></script>
 </body>
 </html>

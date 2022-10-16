@@ -1,0 +1,237 @@
+/*---------------- Colors ----------------*/
+:root {
+    --primary: #2B331F;
+    --secondary: #BBC8BA;
+    --tertiary: #546747;
+    --background: #FDDCA5;
+    --links: #FAB742;
+    --danger: #d63523;
+}
+
+/*---------------- Page Elements ----------------*/
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    overflow: overlay;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    color: var(--primary);
+}
+
+p, ul, ol, li, a, label, input, textarea, strong {
+    font-family: 'Lora', sans-serif;
+}
+
+ul {
+    list-style-position: inside;
+}
+
+th, td {
+    border: 1px solid black;
+}
+
+/*------------ Forms ------------*/
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    padding-left: 12px;
+    padding-right: 12px;
+    
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+
+.form-control {
+    padding: 6px 12px;
+
+    border: 1px solid var(--primary);
+    border-radius: 5px;
+}
+
+.submit-btn {
+    all: initial;
+
+    background-color: var(--primary);
+    border: none;
+    border-radius: 5px;
+
+    padding: 12px;
+    margin: 12px;
+    min-width: 100px;
+    box-sizing: border-box;
+
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: var(--secondary);
+
+    transition: .3s;
+}
+
+.submit-btn:hover, .show-btn:hover {
+    background-color: var(--tertiary);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.danger {
+    background-color: var(--danger);
+    border: 1px solid rgb(87, 0, 0);
+}
+
+.danger:hover {
+    background-color: #ee4a38 !important;
+}
+
+/*------------ Modal ------------*/
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+
+    -webkit-animation-name: fadeIn; /* Fade in the background */
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s
+}
+
+/* Modal Content/Box */
+.modal-content {
+    margin: 15% auto; /* 15% from the top and centered */
+    width: 50% !important; /* Could be more or less, depending on screen size */
+    min-width: 300px;
+    max-width: 450px;
+
+    background-color: var(--secondary);
+    border-radius: 25px;
+    box-shadow: 1px 1px 10px var(--primary);
+
+    padding: 30px;
+
+    text-align: center;
+    overflow: auto;
+
+    position: relative;
+    box-sizing: border-box;
+}
+
+.picture-modal-content {
+    margin: 100px auto; /* 15% from the top and centered */
+    width: fit-content; /* Could be more or less, depending on screen size */
+    max-width: 90vw;
+
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: 1px 1px 10px var(--primary);
+
+    padding: 30px;
+
+    text-align: center;
+    overflow: auto;
+
+    position: relative;
+    box-sizing: border-box;
+}
+
+.picture-modal-content img {
+    width: 100%;
+}
+
+/* The Close Button */
+.close {
+    color: var(--primary);
+    
+    position: absolute;
+    right: 18px;
+    top: 10px;
+
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
+
+/* Add Animation */
+@-webkit-keyframes fadeIn {
+from {opacity: 0} 
+to {opacity: 1}
+}
+
+@keyframes fadeIn {
+from {opacity: 0} 
+to {opacity: 1}
+}
+
+/*---------------- Grid tags ----------------*/
+.col-sm-1 {
+    width: 8.33333333%;
+}
+
+.col-sm-2 {
+    width: 16.666666666666%;
+}
+
+.col-sm-3 {
+    width: 25%;
+}
+
+.col-sm-4 {
+    width: 33%;
+}
+
+.col-sm-5 {
+    width: 41.666666666666%;
+}
+
+.col-sm-6 {
+    width: 50%;
+}
+
+.col-sm-7 {
+    width: 58.33333333%;
+}
+
+.col-sm-8 {
+    width: 66.666666666666%;
+}
+
+.col-sm-9 {
+    width: 75%;
+}
+
+.col-sm-10 {
+    width: 83.33333333%;
+}
+
+.col-sm-11 {
+    width: 91.666666666666%;
+}
+
+.col-sm-12 {
+    width: 100%;
+}
