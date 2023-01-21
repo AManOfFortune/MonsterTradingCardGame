@@ -1,9 +1,6 @@
-﻿using System.Data;
-using Newtonsoft.Json.Linq;
-using Npgsql;
-using NpgsqlTypes;
+﻿using Npgsql;
 
-namespace MonsterTradingCardGame
+namespace MonsterTradingCardGame.DatabaseLogic
 {
     internal sealed class Database
     {
@@ -30,21 +27,20 @@ namespace MonsterTradingCardGame
             _connection.Close();
         }
 
-        public DatabaseResponse Query(string query, JObject? parameters = null)
+        public DatabaseResponse Query(DatabaseRequest request)
         {
             try
             {
-                var cmd = new NpgsqlCommand(query, _connection);
+                var cmd = new NpgsqlCommand(request.SqlQuery, _connection);
 
-                if (parameters != null)
+                // Add parameters to command
+                foreach (var parameter in request.Data!)
                 {
-                    foreach (var parameter in parameters.Properties())
-                    {
-                        var sqlParam = new NpgsqlParameter("@" + parameter.Name, parameter.Value.ToString());
-                        
-                        cmd.Parameters.Add(sqlParam);
-                    }
+                    var sqlParam = new NpgsqlParameter("@" + parameter.Key, parameter.Value);
+
+                    cmd.Parameters.Add(sqlParam);
                 }
+
                 // Makes sure all our results are strings, no matter what data type they are in the database
                 cmd.AllResultTypesAreUnknown = true;
                 // Executes the query

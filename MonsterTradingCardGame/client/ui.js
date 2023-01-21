@@ -23,6 +23,6 @@ function showModal(modalID, closeID) {
     }
 }
 
-document.querySelector("#login").addEventListener("click", () => {
+document.querySelector("#openLogin").addEventListener("click", () => {
     showModal("loginModal", "close_login");
 })

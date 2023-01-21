@@ -31,15 +31,38 @@
                 </div>
             
                 <div class="row">
-                    <input type="submit" class="submit-btn col-sm-4" value="login">
+                    <input id="login" type="submit" class="submit-btn col-sm-4" value="Login">
+                    <input id="register" type="submit" class="submit-btn col-sm-4" value="Register">
                 </div>
 
             </form>
         </div>
     </div>
 
-    <!-- <button id="register">Register</button> -->
-    <button id="login" class="submit-btn">Login</button>
+    <h1>User</h1>
+    <button id="openLogin" class="submit-btn">Login</button>
+    <button id="getUserData" class="submit-btn">Get User Data</button>
+    <button id="getStats" class="submit-btn">Get User Stats</button>
+    <button id="updateUserData" class="submit-btn">Update User Data</button>
+    <button id="getScoreboard" class="submit-btn">Get Scoreboard</button>
+
+    <h1>Cards</h1>
+    <button id="addPackages" class="submit-btn">Add Packages</button>
+    <button id="buyPackage" class="submit-btn">Buy latest package</button>
+    <button id="getOwnedCards" class="submit-btn">Get all owned cards</button>
+    <button id="getDeck" class="submit-btn">Get Deck</button>
+    <button id="getDeckPlain" class="submit-btn">Get Deck (plain format)</button>
+    <button id="configureDeck" class="submit-btn">Configure Deck</button>
+
+    <h1>Trades</h1>
+    <button id="getTrades" class="submit-btn">Get all open trades</button>
+    <button id="createTrade" class="submit-btn">Create new Trade</button>
+    <button id="buyTrade" class="submit-btn">Buy Trade</button>
+    <button id="deleteTrade" class="submit-btn">Delete Trade</button>
+
+    <h1>Battle</h1>
+    <button id="startBattle" class="submit-btn">Start Battle</button>
+
     
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript" src="ui.js"></script>
