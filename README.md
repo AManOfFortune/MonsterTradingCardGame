@@ -48,6 +48,7 @@ To seperate the Database from the functional logic of the routes, it has it's ow
 + cards
 + packs
 + tradingdeals
+
 To see the exact columns and datatypes, check out the "db_copy.sql" file insde the "postgre" folder.
 
 #### StateLogic
