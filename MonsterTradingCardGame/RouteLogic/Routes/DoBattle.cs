@@ -158,7 +158,7 @@ namespace MonsterTradingCardGame.RouteLogic.Routes
 
             fightReport.Add("Opponent", opponentJson);
             fightReport.Add("Winner", winner);
-            fightReport.Add("Number of Rounds", roundNumber);
+            fightReport.Add("Number of Rounds", roundNumber + 1);
             fightReport.Add("Fightlog", fightlog);
 
             return fightReport;

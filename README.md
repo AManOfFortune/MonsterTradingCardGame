@@ -23,9 +23,11 @@ To start the database, make sure you follow these steps:
 5. Now you should be able to start the database by running the "start_db.cmd" file
 6. After successfully starting the database, you can import all tables by running the "import_db.cmd" file while the database is running.
 
-### Client
+### Client & Unique feature
 
-To test the server, a simple javascript client exists in the "/client" folder. Host the index.html file and use the buttons to send the different available requests. Open the console to see the what the server returns. The server itself should also log expressive output.
+To test the server, a simple javascript client exists in the "/client" folder. The running server itself is capable of serving you these files, which is this project's unique feature. If you open your browser and type the correct url (e.g. "http://localhost:10001"), the server should return the client files. Test the different functions by clicking on the buttons. Keep in mind this client is temporary and therefore not very user friendly. Open the console to see a cleaner output of what the server returns. The server itself should also log expressive output.
+
+**If this does not work and the server returns "Requested resource not found":** _It is probably a problem with the server not finding the "/client" folder on your machine. Go to the "Router.cs" file, there go to the "FileRoute()" function and change the "path" variable to a string with the absolute path to the "/client" folder._
 
 ## How it works
 
@@ -41,7 +43,12 @@ After a request has been parsed, it gets passed on to the "Router". This class d
 
 #### DatabaseLogic
 
-To seperate the Database from the functional logic of the routes, it has it's own communication class called "DatabaseRequest". After the database query is done, a "DatabaseResponse" object is returned, that the route has to then further deal with.
+To seperate the Database from the functional logic of the routes, it has it's own communication class called "DatabaseRequest". After the database query is done, a "DatabaseResponse" object is returned, that the route has to then further deal with. The Database itself has 4 tables:
++ users
++ cards
++ packs
++ tradingdeals
+To see the exact columns and datatypes, check out the "db_copy.sql" file insde the "postgre" folder.
 
 #### StateLogic
 

@@ -1,4 +1,5 @@
-﻿using MonsterTradingCardGame.RouteLogic.Routes;
+﻿using System.Diagnostics;
+using MonsterTradingCardGame.RouteLogic.Routes;
 using Newtonsoft.Json.Linq;
 using MonsterTradingCardGame.ServerLogic;
 using MonsterTradingCardGame.StateLogic;
@@ -81,6 +82,58 @@ namespace MonsterTradingCardGame.RouteLogic
         }
 
         public HttpResponse Route(HttpRequest request)
+        {
+            // If the requested route contains a '.', the requested resource is a file
+            if (request.Location.Contains('.'))
+                return FileRoute(request);
+            
+            // Otherwise the requested route concerns game logic
+            return ApiRoute(request);
+        }
+
+        private HttpResponse FileRoute(HttpRequest request)
+        {
+            // Path of the directory containing all to-be-served files
+            // If this does not work, simply paste the absolute path to the "/client" folder as a string here
+            var path = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory))) + @"\client";
+
+            // If the requested resource is not requested via GET, the request is invalid
+            if (request.Method != "GET") 
+                return HttpResponse.BadRequest.WithStatusMessage("Use GET method to request files!");
+
+            var fileSystemEntries = Directory.GetFileSystemEntries(path); // gets all file paths in the root directory
+            
+            for (int i = 0; i < fileSystemEntries.Length; i++)
+            {
+                // Convert absolute file path to route
+                var route = fileSystemEntries[i].Substring(path.Length);
+                route = route.Replace(@"\", "/");
+                
+                // Check if the requested resource matches the discovered file
+                if (route == request.Location)
+                {
+                    string fileContent = File.ReadAllText(fileSystemEntries[i]); // Read the file content
+                    string fileExtension = Path.GetExtension(fileSystemEntries[i]); // Read file extension
+                    
+                    switch(fileExtension)
+                    {
+                        case ".html":
+                            return HttpResponse.OkWithHtml.WithFileContent(fileContent);
+                        case ".css":
+                            return HttpResponse.OkWithCss.WithFileContent(fileContent);
+                        case ".js":
+                            return HttpResponse.OkWithJs.WithFileContent(fileContent);
+                        default:
+                            return HttpResponse.MediaTypeNotSupported.WithStatusMessage("The media with type " + fileExtension + " exists but is currently not supported.");
+                    }
+                }
+            }
+
+            // If no match was found, the requested resource does not exist
+            return HttpResponse.NotFound.WithStatusMessage("The requested file was not found!");
+        }
+
+        private HttpResponse ApiRoute(HttpRequest request)
         {
             // Check if requested route exists
             if (!_routes.ContainsKey(request.Method)) // Allowed/Supported Method

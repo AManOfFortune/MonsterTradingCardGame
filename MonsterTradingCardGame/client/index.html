@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>MonsterTradingCardGame Test Client</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <span class="close close_login">&times;</span>
@@ -38,30 +39,43 @@
             </form>
         </div>
     </div>
+    
+    <div class="wrapper">
+        <div class="col-sm-7">
+            <h1>User</h1>
+            <button id="openLogin" class="submit-btn">Login</button>
+            <button id="getUserData" class="submit-btn">Get User Data</button>
+            <button id="getStats" class="submit-btn">Get User Stats</button>
+            <button id="updateUserData" class="submit-btn">Update User Data</button>
+            <button id="getScoreboard" class="submit-btn">Get Scoreboard</button>
+        
+            <h1>Cards</h1>
+            <button id="addPackages" class="submit-btn">Add Packages</button>
+            <button id="buyPackage" class="submit-btn">Buy latest package</button>
+            <button id="getOwnedCards" class="submit-btn">Get all owned cards</button>
+            <button id="getDeck" class="submit-btn">Get Deck</button>
+            <button id="getDeckPlain" class="submit-btn">Get Deck (plain format)</button>
+            <button id="configureDeck" class="submit-btn">Configure Deck</button>
+        
+            <h1>Trades</h1>
+            <button id="getTrades" class="submit-btn">Get all open trades</button>
+            <button id="createTrade" class="submit-btn">Create new Trade</button>
+            <button id="buyTrade" class="submit-btn">Buy Trade</button>
+            <button id="deleteTrade" class="submit-btn">Delete Trade</button>
+        
+            <h1>Battle</h1>
+            <button id="startBattle" class="submit-btn">Start Battle</button>
+        </div>
+        
+        <div class="col-sm-5">
+            <h2>Server Response</h2>
+            <label for="statusCode">Status Code</label>
+            <input name="statusCode" id="statusCode" disabled>
 
-    <h1>User</h1>
-    <button id="openLogin" class="submit-btn">Login</button>
-    <button id="getUserData" class="submit-btn">Get User Data</button>
-    <button id="getStats" class="submit-btn">Get User Stats</button>
-    <button id="updateUserData" class="submit-btn">Update User Data</button>
-    <button id="getScoreboard" class="submit-btn">Get Scoreboard</button>
-
-    <h1>Cards</h1>
-    <button id="addPackages" class="submit-btn">Add Packages</button>
-    <button id="buyPackage" class="submit-btn">Buy latest package</button>
-    <button id="getOwnedCards" class="submit-btn">Get all owned cards</button>
-    <button id="getDeck" class="submit-btn">Get Deck</button>
-    <button id="getDeckPlain" class="submit-btn">Get Deck (plain format)</button>
-    <button id="configureDeck" class="submit-btn">Configure Deck</button>
-
-    <h1>Trades</h1>
-    <button id="getTrades" class="submit-btn">Get all open trades</button>
-    <button id="createTrade" class="submit-btn">Create new Trade</button>
-    <button id="buyTrade" class="submit-btn">Buy Trade</button>
-    <button id="deleteTrade" class="submit-btn">Delete Trade</button>
-
-    <h1>Battle</h1>
-    <button id="startBattle" class="submit-btn">Start Battle</button>
+            <label for="responseObject">Response Object</label>
+            <textarea name="responseObject" id="responseObject" disabled></textarea>
+        </div>
+    </div>
 
     
     <script type="text/javascript" src="script.js"></script>

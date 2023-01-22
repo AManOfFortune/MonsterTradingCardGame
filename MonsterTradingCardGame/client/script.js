@@ -1,4 +1,5 @@
 var authToken = "admin-mtcgToken"
+var loggedInUsername = "admin"
 var ownedCards = {}
 var openTrades = {}
 
@@ -19,26 +20,22 @@ async function queryData(method, location, params, customHeaders = {}) {
         }
     )
     .then(async (response) => {
-        try {
-            return await response.json()
-        }
-        catch(err) {
-            return {}
-        }
+        var statusCode = response.status
+        var json = await response.json()
+
+        showResponse(statusCode, json)
+        
+        return json
     })
     .then(text => {
         try {
-            if(text != {}) {
-                console.log(text)
-
-                if("authToken" in text) {
-                    authToken = text["authToken"]
-                }
+            console.log(text)
+        
+            if("authToken" in text) {
+                authToken = text["authToken"]
+                console.log("New authtoken: " + authToken)
             }
-            else {
-                console.log("OK")
-            }
-
+            
             responseJSON = text;
         }
         catch(err) {
@@ -77,7 +74,9 @@ async function queryContinousData(method, location, params, customHeaders = {})
 
         console.log(printable)
 
-        if(printable.message == "Searching for an opponent...")
+        showResponse(response.status, printable)
+
+        if(printable.Message == "Searching for an opponent...")
         {
             setTimeout(() => {
                 queryContinousData(method, location, params, customHeaders)
@@ -88,15 +87,18 @@ async function queryContinousData(method, location, params, customHeaders = {})
     return responseJSON;
 }
 
-// document.querySelector("#register").addEventListener("click", () => {
-//     queryData("POST", "/users", JSON.stringify({username: "test", password: "test"}))
-// })
+function showResponse(statusCode, responseObject) {
+    document.querySelector("#statusCode").value = statusCode;
+    document.querySelector("#responseObject").value = JSON.stringify(responseObject);
+}
 
 function getUsernameAndPassword() {
     const username = document.querySelector("#username").value
     const password = document.querySelector("#password").value
 
     console.log("Username: " + username + " Password: " + password)
+
+    loggedInUsername = username
 
     return {Username: username, Password: password}
 }
@@ -124,7 +126,7 @@ document.querySelector("#register").addEventListener("click", async (e) => {
 document.querySelector("#getUserData").addEventListener("click", async (e) => {
     e.preventDefault()
 
-    await queryData("GET", "/users/admin", null, { "Authorization": "Basic " + authToken })
+    await queryData("GET", "/users/" + loggedInUsername, null, { "Authorization": "Basic " + authToken })
 })
 
 document.querySelector("#getStats").addEventListener("click", async (e) => {
@@ -136,7 +138,7 @@ document.querySelector("#getStats").addEventListener("click", async (e) => {
 document.querySelector("#updateUserData").addEventListener("click", async (e) => {
     e.preventDefault()
 
-    await queryData("PUT", "/users/admin", JSON.stringify({Name: "admin", Bio: "Me vibin...", Image: ":D"}), { "Authorization": "Basic " + authToken })
+    await queryData("PUT", "/users/" + loggedInUsername, JSON.stringify({Name: loggedInUsername, Bio: "Me vibin...", Image: ":D"}), { "Authorization": "Basic " + authToken })
 })
 
 document.querySelector("#getScoreboard").addEventListener("click", async (e) => {

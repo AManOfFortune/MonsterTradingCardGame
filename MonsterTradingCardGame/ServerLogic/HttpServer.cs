@@ -82,36 +82,23 @@ namespace MonsterTradingCardGame.ServerLogic
 
             try
             {
-                Console.WriteLine(incomingMessage);
-                
                 // Parses incoming request
                 incomingRequest = new(incomingMessage);
 
                 // Logs parsed incoming request
                 Console.WriteLine($"Incoming request:\n{JObject.FromObject(incomingRequest)}\n");
-
-                // Routes request and sends a response
-                // If we want to keep the connection alive (only used in /battles at the moment) loop until opponent is found or server is stopped
-                //do
-                //{
-                    // Routes the request
-                    // TODO: Don't lock mutex for the entire duration of the logic but only when it's actually needed
-                    GeneralMutex.WaitOne();
-                    outgoingResponse = router.Route(incomingRequest);
-                    GeneralMutex.ReleaseMutex();
-
-                    Console.WriteLine($"Outgoing response:\n[{outgoingResponse.StatusCode}] {outgoingResponse.StatusMessage} {outgoingResponse.Body}");
-
-                    //Console.WriteLine(outgoingResponse);
-
-                    // Sends back response as a string
-                    stream.Write(Encoding.UTF8.GetBytes(outgoingResponse));
-
-                    // If we want to keep the connection alive (only happens in battle at the moment), wait for a second then route again
-                    //if(outgoingResponse.KeepConnectionAlive)
-                    //    Thread.Sleep(2000);
-
-                //} while (outgoingResponse.KeepConnectionAlive && !serverStop);
+                
+                // Routes the request
+                // TODO: Don't lock mutex for the entire duration of the logic but only when it's actually needed
+                GeneralMutex.WaitOne();
+                outgoingResponse = router.Route(incomingRequest);
+                GeneralMutex.ReleaseMutex();
+                
+                // Sends back response as a string
+                stream.Write(Encoding.UTF8.GetBytes(outgoingResponse));
+                
+                // Logs outgoing response
+                Console.WriteLine($"Outgoing response:\n[{outgoingResponse.StatusCode}] {outgoingResponse.Body}");
             }
             // If anything not caught elsewhere fails, log error and send bad request response
             // Most common errors caught here are JSON parsing errors
@@ -125,7 +112,8 @@ namespace MonsterTradingCardGame.ServerLogic
 
                 stream.Write(Encoding.UTF8.GetBytes(outgoingResponse));
             }
-
+            
+            // Closes the client connection
             client.Close();
             Console.WriteLine("\n------------------------------------------------------");
         }

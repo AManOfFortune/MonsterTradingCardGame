@@ -33,6 +33,8 @@ namespace MonsterTradingCardGame.ServerLogic
                 {
                     Method = line.Split(" ")[0];
                     Location = "/" + line.Split(" ")[1].Split("/")[1];
+                    // If Location is a single "/" it means the user requested the default route and wants to access the index.html file
+                    Location = Location == "/" ? "/index.html" : Location;
                     continue;
                 }
 

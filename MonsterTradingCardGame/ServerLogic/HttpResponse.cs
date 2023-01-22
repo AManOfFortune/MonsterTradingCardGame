@@ -34,12 +34,18 @@ namespace MonsterTradingCardGame.ServerLogic
             return this;
         }
         
+        public HttpResponse WithFileContent(string fileContent)
+        {
+            Body.Add("FileContent", fileContent);
+            return this;
+        }
+        
         // Creates a valid http response string
         public override string ToString()
         {
             var additionalHeadersString = "";
-            var bodyLength = 0;
-            var bodyString = Environment.NewLine;
+            string bodyString;
+            string contentType;
 
             if (Headers != null)
             {
@@ -55,19 +61,40 @@ namespace MonsterTradingCardGame.ServerLogic
             {
                 additionalHeadersString += "Connection: keep-alive" + Environment.NewLine;
             }
+            
+            if(!Body.ContainsKey("Message"))
+                Body.Add("Message", StatusMessage);
+            
+            // TODO: Implement a better way to differentiate files from json content
+            switch (StatusMessage)
+            {
+                case "html":
+                    contentType = "text/html";
+                    bodyString = Body["FileContent"]!.ToString();
+                    break;
+                case "css":
+                    contentType = "text/css";
+                    bodyString = Body["FileContent"]!.ToString();
+                    break;
+                case "js":
+                    contentType = "text/javascript";
+                    bodyString = Body["FileContent"]!.ToString();
+                    break;
+                default:
+                    contentType = "application/json";
+                    bodyString = Body.ToString();
+                    break;
+            }
 
-            Body.Add("Message", StatusMessage);
-
-            bodyLength = Body.ToString().Length;
-            bodyString += Body;
+            int bodyLength = bodyString.Length;
 
             return "HTTP/1.0 " + StatusCode + Environment.NewLine
                    + "Content-Length: " + bodyLength + Environment.NewLine
-                   + "Content-Type: text/plain" + Environment.NewLine
+                   + "Content-Type: " + contentType + Environment.NewLine
                    + "Access-Control-Allow-Origin: *" + Environment.NewLine
                    + "Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE" + Environment.NewLine
                    + "Access-Control-Allow-Headers: X-PINGOTHER, Content-Type, Authorization" + Environment.NewLine
-                   + additionalHeadersString
+                   + additionalHeadersString + Environment.NewLine
                    + bodyString
                    + Environment.NewLine + Environment.NewLine;
         }
@@ -80,6 +107,10 @@ namespace MonsterTradingCardGame.ServerLogic
         public static HttpResponse Forbidden => new(403, "Action not allowed!");
         public static HttpResponse NotFound => new(404, "Resource not found!");
         public static HttpResponse MethodNotAllowed => new(405, "Method not allowed!");
+        public static HttpResponse MediaTypeNotSupported => new(415, "File type not supported!");
         public static HttpResponse InternalServerError => new(500, "Oops! Something went wrong on our end, please try again later.");
+        public static HttpResponse OkWithHtml => new(200, "html");
+        public static HttpResponse OkWithCss => new(200, "css");
+        public static HttpResponse OkWithJs => new(200, "js");
     }
 }
